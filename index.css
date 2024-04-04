@@ -1,0 +1,66 @@
+
+.res-image{
+    border-radius: 16px;
+    object-fit: cover;
+    width: 257.2px;
+    height: 171.467px;
+    position: relative
+    
+}
+
+.res-card-text{
+    font-size: 18px;
+}
+
+.res-container{
+    flex-wrap: wrap;
+    display: flex;
+    padding: 20px;
+    position: relative;
+}
+
+.res-card{
+    margin: 15px;
+}
+.res-card:hover{
+    border: 1px solid black;
+    cursor: pointer;
+
+}
+
+.res-cuisine{
+    font-weight: 200;
+    font-size: 16px;
+    justify-content: center;
+}
+
+.res-card-description{
+    display: grid;
+}
+
+.header{
+    display: flex;
+    justify-content:space-between;
+    padding: 0px 10px;
+    margin: 10px;
+}
+
+.nav-items > ul{
+    display: flex;
+    list-style-type: none;
+}
+
+.nav-items > ul >li{
+    margin: 10px;
+   
+}
+.discount-header{
+    position: absolute;
+    margin-top: -20px;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 15px;
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 22px;
+    
+}
