@@ -12,11 +12,6 @@ export default function RestaurantCard(props) {
     cloudinaryImageId,
     aggregatedDiscountInfoV3,
   } = props?.resInfo;
-
-  console.log(
-    aggregatedDiscountInfoV3?.header,
-    aggregatedDiscountInfoV3?.subHeader
-  );
   return (
     <div className="res-card">
       <div className="image-container">
