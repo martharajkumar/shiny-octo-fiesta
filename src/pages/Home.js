@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import RestaurantCard from "../components/RestaurantCard";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
@@ -7,7 +7,9 @@ export default function Home() {
   const [location, setLocation] = useState({ lat: null, long: null });
   const [restaurants, setRestaurants] = useState([]);
   const [restaurantData, setRestaurantData] = useState({});
-  const [chipActive, setChipActive] = useState(false);
+  const [chipActive, setChipActive] = useState(null);
+
+  const originalResData = useRef([]);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -32,14 +34,76 @@ export default function Home() {
         ?.restaurants
     );
     setRestaurantData(resData);
+    originalResData.current =
+      resData?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
   };
 
-  const handleFilter = () => {
-    setChipActive(true);
-    console.log("click");
+  const handleFilter = (filter, index) => {
+    switch (index) {
+      case 1:
+        const filterDevileryTimeAscData = originalResData.current.sort(
+          (restaurant1, restaurant2) => {
+            const restaurantData1 = restaurant1?.info?.sla?.deliveryTime;
+            const restaurantData2 = restaurant2?.info?.sla?.deliveryTime;
+            return restaurantData1 - restaurantData2;
+          }
+        );
+        setRestaurants(filterDevileryTimeAscData);
+        setChipActive(index);
+        break;
+
+      case 2:
+        const filterRatingData = originalResData.current.filter(
+          (restaurant) => restaurant.info.avgRating > 4
+        );
+        setRestaurants(filterRatingData);
+        setChipActive(index);
+        break;
+
+      case 3:
+        const filterCostforTwoAscData = originalResData.current.sort(
+          (restaurant1, restaurant2) => {
+            const restaurantData1 = parseInt(
+              restaurant1?.info?.costForTwo.replace("₹", "").trim()
+            );
+            const restaurantData2 = parseInt(
+              restaurant2?.info?.costForTwo.replace("₹", "").trim()
+            );
+            return restaurantData1 - restaurantData2;
+          }
+        );
+        setRestaurants(filterCostforTwoAscData);
+        setChipActive(index);
+        break;
+
+      case 4:
+        const filterCostforTwoDescData = originalResData.current.sort(
+          (restaurant1, restaurant2) => {
+            const restaurantData1 = parseInt(
+              restaurant1?.info?.costForTwo.replace("₹", "").trim()
+            );
+            const restaurantData2 = parseInt(
+              restaurant2?.info?.costForTwo.replace("₹", "").trim()
+            );
+            return restaurantData2 - restaurantData1;
+          }
+        );
+        setRestaurants(filterCostforTwoDescData);
+        setChipActive(index);
+        break;
+
+      default:
+        setRestaurants(originalResData.current);
+        setChipActive(index);
+        break;
+    }
   };
 
-  console.log(restaurantData, "::::::::::::::::::::res data");
+  const handleClickDelete = () => {
+    setRestaurants(originalResData.current);
+    setChipActive(null);
+  };
+
   return (
     <>
       <div style={{ fontWeight: 800, fontSize: "30px" }}>
@@ -47,13 +111,16 @@ export default function Home() {
       </div>
       <Stack direction="row" spacing={1}>
         {restaurantData?.data?.cards[3]?.card?.card?.sortConfigs?.map(
-          (config) => (
+          (config, index) => (
             <Chip
               key={config.key}
               label={config.title == "Rating" ? "Ratings 4.0+" : config?.title}
               variant="outlined"
-              onClick={() => handleFilter()}
-              onDelete={chipActive ? () => console.log("delete") : undefined}
+              color={chipActive == index ? "primary" : "default"}
+              onClick={() => handleFilter(config?.title, index)}
+              onDelete={
+                chipActive == index ? () => handleClickDelete() : undefined
+              }
             />
           )
         )}

@@ -11,6 +11,7 @@ export default function RestaurantCard(props) {
     avgRating,
     cloudinaryImageId,
     aggregatedDiscountInfoV3,
+    costForTwo,
   } = props?.resInfo;
   return (
     <div className="res-card">
@@ -66,8 +67,13 @@ export default function RestaurantCard(props) {
           <span>{sla.slaString}</span>
         </div>
         <div className="res-card-description">
-          <div className="res-cuisine">{cuisines.join(",")}</div>
+          <div className="res-cuisine">
+            {cuisines.length > 4
+              ? cuisines.join(",").slice(0, 35) + "..."
+              : cuisines.join(",")}
+          </div>
           <div className="res-cuisine">{areaName}</div>
+          <div className="res-cuisine">{costForTwo}</div>
         </div>
       </div>
     </div>
