@@ -19,6 +19,18 @@
     position: relative;
 }
 
+
+.restaurant-menu-link{
+    text-decoration: none;
+}
+
+.restaurant-menu-link:hover,
+.restaurant-menu-link{
+    color: inherit;
+
+}
+
+
 .res-card{
     margin: 15px;
 }
@@ -44,16 +56,19 @@
     padding: 0px 10px;
     margin: 10px;
 }
-
-.nav-items > ul{
-    display: flex;
-    list-style-type: none;
+.nav-items
+{
+    padding: 20px;
 }
 
-.nav-items > ul >li{
-    margin: 10px;
-   
+.nav-item-link:hover,
+.nav-item-link{
+    text-decoration: none;
+    margin: 30px;
+    color:inherit
 }
+
+
 .discount-header{
     position: absolute;
     margin-top: -20px;

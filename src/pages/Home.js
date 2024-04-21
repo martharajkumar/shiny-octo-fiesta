@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import RestaurantCard from "../components/RestaurantCard";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   const [location, setLocation] = useState({ lat: null, long: null });
@@ -106,10 +107,10 @@ export default function Home() {
 
   return (
     <>
-      <div style={{ fontWeight: 800, fontSize: "30px" }}>
+      <div style={{ fontWeight: 800, fontSize: "30px", marginLeft: "40px" }}>
         {restaurantData?.data?.cards[2]?.card?.card?.title}
       </div>
-      <Stack direction="row" spacing={1}>
+      <Stack style={{ marginLeft: "50px" }} direction="row" spacing={1}>
         {restaurantData?.data?.cards[3]?.card?.card?.sortConfigs?.map(
           (config, index) => (
             <Chip
@@ -127,7 +128,18 @@ export default function Home() {
       </Stack>
       <div className="res-container">
         {restaurants?.map((restaurant) => (
-          <RestaurantCard key={restaurant.info.id} resInfo={restaurant.info} />
+          <Link
+            to={
+              "/restaurants/" +
+              restaurant?.info?.id +
+              `/${location?.lat}` +
+              `/${location?.long}`
+            }
+            key={restaurant?.info?.id}
+            className="restaurant-menu-link"
+          >
+            <RestaurantCard resInfo={restaurant.info} />
+          </Link>
         ))}
       </div>
     </>
