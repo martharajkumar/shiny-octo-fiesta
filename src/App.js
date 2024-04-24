@@ -11,7 +11,7 @@ import Home from "../src/pages/Home";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import RestaurantMenu from "./components/RestaurantMenu";
+import RestaurantMenu from "./pages/RestaurantMenu";
 
 const AppLayout = () => {
   return (

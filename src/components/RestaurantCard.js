@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { CDN_IMG_URL } from "../utils/constants";
 
 export default function RestaurantCard(props) {
+  console.log(props);
   const {
     name,
     cuisines,
@@ -12,7 +13,7 @@ export default function RestaurantCard(props) {
     cloudinaryImageId,
     aggregatedDiscountInfoV3,
     costForTwo,
-  } = props?.resInfo;
+  } = props?.resInfo || {};
   return (
     <div className="res-card">
       <div className="image-container">
@@ -64,16 +65,22 @@ export default function RestaurantCard(props) {
             </defs>
           </svg>
           <span>{avgRating} </span>
-          <span>{sla.slaString}</span>
+          <span>{sla?.slaString}</span>
         </div>
         <div className="res-card-description">
           <div className="res-cuisine">
-            {cuisines.length > 4
-              ? cuisines.join(",").slice(0, 35) + "..."
-              : cuisines.join(",")}
+            {cuisines?.length > 4
+              ? cuisines?.join(",").slice(0, 35) + "..."
+              : cuisines?.join(",")}
           </div>
           <div className="res-cuisine">{areaName}</div>
-          <div className="res-cuisine">{costForTwo}</div>
+          <div className="res-cuisine">
+            {!isNaN(costForTwo)
+              ? parseInt(costForTwo?.replace("₹", "")) < 1000
+                ? costForTwo
+                : "₹" + parseInt(costForTwo / 100).toLocaleString() + " for Two"
+              : undefined}
+          </div>
         </div>
       </div>
     </div>
