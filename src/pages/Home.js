@@ -3,6 +3,7 @@ import RestaurantCard from "../components/RestaurantCard";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import { Link } from "react-router-dom";
+import ShimmerUI from "../components/ShimmerUI";
 
 export default function Home() {
   const [location, setLocation] = useState({ lat: null, long: null });
@@ -104,6 +105,10 @@ export default function Home() {
     setRestaurants(originalResData.current);
     setChipActive(null);
   };
+
+  if (!restaurants || restaurants?.length === 0) {
+    return <ShimmerUI />;
+  }
 
   return (
     <>

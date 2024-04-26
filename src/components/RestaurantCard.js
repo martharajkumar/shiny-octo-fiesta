@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 import { CDN_IMG_URL } from "../utils/constants";
 
 export default function RestaurantCard(props) {
-  console.log(props);
   const {
     name,
     cuisines,
@@ -79,7 +78,7 @@ export default function RestaurantCard(props) {
               ? parseInt(costForTwo?.replace("₹", "")) < 1000
                 ? costForTwo
                 : "₹" + parseInt(costForTwo / 100).toLocaleString() + " for Two"
-              : undefined}
+              : costForTwo}
           </div>
         </div>
       </div>
