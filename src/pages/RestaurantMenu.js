@@ -5,6 +5,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Typography from "@mui/material/Typography";
 import { CDN_IMG_URL } from "../utils/constants";
 import RestaurantCard from "../components/RestaurantCard";
+import RestaurantMenuItem from "../components/RestaurantMenuItem";
 
 export default function RestaurantMenu() {
   const [restaurantMenu, setRestaurantMenu] = useState([]);
@@ -23,7 +24,14 @@ export default function RestaurantMenu() {
     setRestaurantMenu(resMenu);
   };
 
-  console.log(restaurantMenu, ":::::::card.card.info::::::props");
+  const ItemCategory =
+    restaurantMenu?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
+      (itemCategory) =>
+        itemCategory?.card?.card["@type"] ==
+        "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
+    );
+
+  console.log(ItemCategory, ":::::::::::::::itemcategory");
 
   return (
     <div>
@@ -31,6 +39,13 @@ export default function RestaurantMenu() {
         <RestaurantCard
           resInfo={restaurantMenu?.data?.cards[2]?.card?.card?.info}
         />
+      </div>
+      <div className="menu-accordion-container">
+        {ItemCategory?.map((menuItem, index) => (
+          <>
+            <RestaurantMenuItem menu={menuItem?.card?.card} key={index} />
+          </>
+        ))}
       </div>
       {/* {restaurantMenu?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards?.map(
         (menuCard, index) => (

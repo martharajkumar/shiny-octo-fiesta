@@ -1,6 +1,8 @@
 import React from "react";
 import { LOGO_URL } from "../utils/constants";
 import { Link } from "react-router-dom";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import Badge from "@mui/material/Badge";
 
 function Header() {
   return (
@@ -13,7 +15,9 @@ function Header() {
           Home
         </Link>
         <Link className="nav-item-link" to="/cart">
-          Cart
+          <Badge badgeContent={4} color="primary">
+            <ShoppingCartIcon color="action" />
+          </Badge>
         </Link>
       </div>
     </div>
