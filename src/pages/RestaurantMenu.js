@@ -24,14 +24,18 @@ export default function RestaurantMenu() {
     setRestaurantMenu(resMenu);
   };
 
-  const ItemCategory =
+
+  const ItemCategory="type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
+  const NestedItemCategory="type.googleapis.com/swiggy.presentation.food.v2.NestedItemCategory"
+
+  const restaurantMenuItem=
     restaurantMenu?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
       (itemCategory) =>
-        itemCategory?.card?.card["@type"] ==
-        "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
+        itemCategory?.card?.card["@type"] ==ItemCategory||NestedItemCategory
     );
 
-  console.log(ItemCategory, ":::::::::::::::itemcategory");
+
+    console.log(restaturantMenuItem,":::::::::::::::::::::rest")
 
   return (
     <div>
@@ -40,57 +44,17 @@ export default function RestaurantMenu() {
           resInfo={restaurantMenu?.data?.cards[2]?.card?.card?.info}
         />
       </div>
-      <div className="menu-accordion-container">
-        {ItemCategory?.map((menuItem, index) => (
-          <>
+        {restaturantMenuItem?.map((menuItem, index) => (
+          <div className="menu-accordion-container" key={index}>
             <RestaurantMenuItem menu={menuItem?.card?.card} key={index} />
-          </>
+          </div>
+        ))}
+        {restaturantMenuItem?.categories?.map((menuItem, index) => (
+          <div className="menu-accordion-container" key={index}>
+            <RestaurantMenuItem menu={menuItem?.card?.card} key={index} />
+          </div>
         ))}
       </div>
-      {/* {restaurantMenu?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards?.map(
-        (menuCard, index) => (
-          <div className="menu-accordion-container" key={index}>
-            {menuCard?.card?.card?.title != undefined &&
-            menuCard?.card?.card?.title != "Top Picks" ? (
-              <Accordion style={{ width: "80%" }}>
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1-content"
-                  id="panel1-header"
-                >
-                  <Typography style={{ fontWeight: 700 }}>
-                    {menuCard?.card?.card?.itemCards?.length != undefined
-                      ? menuCard?.card?.card?.title +
-                        "(" +
-                        menuCard?.card?.card?.itemCards?.length +
-                        ")"
-                      : menuCard?.card?.card?.title}
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  {menuCard?.card?.card?.itemCards?.map((item, index) => {
-                    console.log(item); // Log item object
-                    return (
-                      <div className="menu-accordion-details" key={index}>
-                        <div className="item-name">
-                          {item?.card?.info?.name}
-                        </div>
-                        <div className="item-image-container">
-                          <img
-                            className="menu-res-image"
-                            src={CDN_IMG_URL + item?.card?.info?.imageId}
-                            alt="menu-img"
-                          />
-                        </div>
-                      </div>
-                    );
-                  })}
-                </AccordionDetails>
-              </Accordion>
-            ) : undefined}
-          </div>
-        )
-      )} */}
     </div>
   );
 }
