@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { CDN_IMG_URL } from "../utils/constants";
-import ShimmerUI from "./ShimmerUI";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function RestaurantCard(props) {
   const {
@@ -24,7 +24,7 @@ export default function RestaurantCard(props) {
             alt="img"
           />
         ) : (
-          <ShimmerUI />
+          <CircularProgress />
         )}
         <div className="discount-header">
           {aggregatedDiscountInfoV3?.header}

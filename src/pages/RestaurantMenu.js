@@ -24,19 +24,20 @@ export default function RestaurantMenu() {
     setRestaurantMenu(resMenu);
   };
 
+  const ItemCategory =
+    "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory";
+  const NestedItemCategory =
+    "type.googleapis.com/swiggy.presentation.food.v2.NestedItemCategory";
 
-  const ItemCategory="type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
-  const NestedItemCategory="type.googleapis.com/swiggy.presentation.food.v2.NestedItemCategory"
-
-  const restaurantMenuItem=
+  const restaurantMenuItem =
     restaurantMenu?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
-      (itemCategory) =>
-        itemCategory?.card?.card["@type"] ==ItemCategory||NestedItemCategory
+      (itemCategory) => itemCategory?.card?.card["@type"] == ItemCategory
     );
 
-
-    console.log(restaturantMenuItem,":::::::::::::::::::::rest")
-
+  const nestedRestaurantMenuItem =
+    restaurantMenu?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
+      (itemCategory) => itemCategory?.card?.card["@type"] == NestedItemCategory
+    );
   return (
     <div>
       <div className="restauarant-name">
@@ -44,17 +45,18 @@ export default function RestaurantMenu() {
           resInfo={restaurantMenu?.data?.cards[2]?.card?.card?.info}
         />
       </div>
-        {restaturantMenuItem?.map((menuItem, index) => (
+      {restaurantMenuItem?.map((menuItem, index) => (
+        <div className="menu-accordion-container" key={index}>
+          <RestaurantMenuItem menu={menuItem?.card?.card} key={index} />
+        </div>
+      ))}
+      {nestedRestaurantMenuItem?.map((nestedRestaurantMenu, index) =>
+        nestedRestaurantMenu.card.card.categories.map((nestedMenu, index) => (
           <div className="menu-accordion-container" key={index}>
-            <RestaurantMenuItem menu={menuItem?.card?.card} key={index} />
+            <RestaurantMenuItem menu={nestedMenu} key={index} />
           </div>
-        ))}
-        {restaturantMenuItem?.categories?.map((menuItem, index) => (
-          <div className="menu-accordion-container" key={index}>
-            <RestaurantMenuItem menu={menuItem?.card?.card} key={index} />
-          </div>
-        ))}
-      </div>
+        ))
+      )}
     </div>
   );
 }

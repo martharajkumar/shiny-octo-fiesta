@@ -24,7 +24,7 @@ export default function RestaurantMenuItem(props) {
           </Typography>
         </AccordionSummary>
         {itemCards.map((dish, index) => (
-          <>
+          <div key={index}>
             <AccordionDetails>
               <div className="menu-item">
                 <div className="item-details">
@@ -47,7 +47,7 @@ export default function RestaurantMenuItem(props) {
                 </div>
               </div>
             </AccordionDetails>
-          </>
+          </div>
         ))}
       </Accordion>
     </div>
